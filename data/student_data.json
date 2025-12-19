@@ -1,0 +1,62 @@
+[
+  {
+    "student_id": "S001",
+    "name": "Ahmed Khan",
+    "semester": 3,
+    "subjects": {
+      "Mathematics": {"marks": 85, "total": 100},
+      "Physics": {"marks": 78, "total": 100},
+      "Programming": {"marks": 92, "total": 100},
+      "English": {"marks": 70, "total": 100}
+    },
+    "attendance": 88,
+    "assignments_submitted": 18,
+    "total_assignments": 20,
+    "performance_notes": "Ahmed shows excellent programming skills and consistent attendance. Needs improvement in English communication. Strong analytical abilities in Mathematics."
+  },
+  {
+    "student_id": "S002",
+    "name": "Fatima Ali",
+    "semester": 3,
+    "subjects": {
+      "Mathematics": {"marks": 95, "total": 100},
+      "Physics": {"marks": 90, "total": 100},
+      "Programming": {"marks": 88, "total": 100},
+      "English": {"marks": 92, "total": 100}
+    },
+    "attendance": 95,
+    "assignments_submitted": 20,
+    "total_assignments": 20,
+    "performance_notes": "Fatima is a fantastic student with exceptional performance across all subjects. Excellent attendance and complete assignment submission. Shows leadership qualities in group projects."
+  },
+  {
+    "student_id": "S003",
+    "name": "Hassan Raza",
+    "semester": 3,
+    "subjects": {
+      "Mathematics": {"marks": 55, "total": 100},
+      "Physics": {"marks": 48, "total": 100},
+      "Programming": {"marks": 60, "total": 100},
+      "English": {"marks": 52, "total": 100}
+    },
+    "attendance": 65,
+    "assignments_submitted": 12,
+    "total_assignments": 20,
+    "performance_notes": "Hassan is performing below average and requires immediate attention. Low attendance is affecting overall performance. Needs tutoring in Mathematics and Physics. Should focus on regular class attendance and assignment completion."
+  },
+  {
+    "student_id": "S004",
+    "name": "Ayesha Malik",
+    "semester": 3,
+    "subjects": {
+      "Mathematics": {"marks": 72, "total": 100},
+      "Physics": {"marks": 68, "total": 100},
+      "Programming": {"marks": 75, "total": 100},
+      "English": {"marks": 80, "total": 100}
+    },
+    "attendance": 82,
+    "assignments_submitted": 17,
+    "total_assignments": 20,
+    "performance_notes": "Ayesha is an average student with steady performance. Good attendance but could improve in technical subjects. Strong in English and communication. Recommended to join study groups for Mathematics and Physics."
+  }
+]
