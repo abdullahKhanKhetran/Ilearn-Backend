@@ -23,9 +23,16 @@ app.add_middleware(
 # Initialize RAG pipeline on startup
 @app.on_event("startup")
 async def startup_event():
-    print("Initializing RAG pipeline...")
-    get_rag_pipeline()
-    print("API is ready!")
+    try:
+        print("Initializing RAG pipeline...")
+        get_rag_pipeline()
+        print("✅ API is ready!")
+    except Exception as e:
+        print(f"❌ Error initializing RAG pipeline: {e}")
+        import traceback
+        traceback.print_exc()
+        # Don't crash the server - it can still serve health checks
+        print("⚠️  Server will start but chat functionality may not work")
 
 @app.get("/", response_model=HealthResponse)
 async def root():

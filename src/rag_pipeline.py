@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from src.vector_store import get_vector_store
+from src.supabase_vector_store import get_vector_store
 from src.llm_handler import get_llm_handler
 from src.utils import calculate_average_marks, categorize_performance
 
@@ -19,16 +19,8 @@ class RAGPipeline:
         if conversation_history is None:
             conversation_history = []
         
-        # Step 1: Retrieve relevant context
-        search_query = f"Student ID: {student_id} {message}"
-        retrieved_docs, retrieved_metadata = self.vector_store.search(search_query, k=1)
-        
-        # Find the specific student
-        student_data = None
-        for metadata in retrieved_metadata:
-            if metadata['student_id'] == student_id:
-                student_data = metadata
-                break
+        # Step 1: First, try to get the student directly by ID (more reliable)
+        student_data = self.vector_store.get_student_by_id(student_id)
         
         if not student_data:
             # If student not found, provide helpful message
@@ -39,12 +31,20 @@ class RAGPipeline:
                 "suggestions": []
             }
         
-        # Step 2: Determine performance category
+        # Step 2: Get the formatted content for this student (used for LLM context)
+        # Try to get it directly from the embeddings table first
+        content, _ = self.vector_store.get_student_content_by_id(student_id)
+        
+        if not content:
+            # Fallback: format the student data for embedding format
+            from src.utils import format_student_data_for_embedding
+            content = format_student_data_for_embedding(student_data)
+        
+        context = content
+        
+        # Step 3: Determine performance category
         avg_marks = calculate_average_marks(student_data['subjects'])
         performance_category = categorize_performance(avg_marks, student_data['attendance'])
-        
-        # Step 3: Prepare context with student info
-        context = retrieved_docs[0]
         
         # Step 4: Generate conversational response with history
         messages = self.llm_handler.create_conversation_messages(message, context, conversation_history)
