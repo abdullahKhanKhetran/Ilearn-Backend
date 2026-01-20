@@ -4,17 +4,18 @@ from src.models import ChatRequest, ChatResponse, HealthResponse
 from src.rag_pipeline import get_rag_pipeline
 from src.config import config
 import uvicorn
+import os
 
 app = FastAPI(
     title="Student Performance Chatbot API",
     description="Conversational RAG-based chatbot for analyzing student performance",
     version="2.0.0"
 )
-
+allowed_origins = os.getenv("CORS_ORIGINS", "*").split(",")
 # CORS middleware for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend domain
+    allow_origins=allowed_origins,  # In production, specify your frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
