@@ -96,25 +96,37 @@ class SupabaseVectorStore:
         return retrieved_docs, retrieved_metadata
     
     def get_student_by_id(self, student_id: str) -> Dict[str, Any]:
-        """Retrieve specific student data by ID"""
-        result = self.supabase.table(self.table_name)\
-            .select("metadata, content")\
+        """
+        Retrieve specific student data by ID
+        Always fetches FRESH data from students table (not cached embeddings)
+        """
+        # Fetch fresh data directly from students table, not from cached embeddings
+        result = self.supabase.table("students")\
+            .select("*")\
             .eq("student_id", student_id)\
             .execute()
         
         if result.data and len(result.data) > 0:
-            return result.data[0]['metadata']
+            return result.data[0]
         return None
     
     def get_student_content_by_id(self, student_id: str) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-        """Retrieve student content and metadata by ID"""
-        result = self.supabase.table(self.table_name)\
-            .select("metadata, content")\
+        """
+        Retrieve student content and metadata by ID
+        Fetches fresh data from students table and formats it
+        """
+        # Fetch fresh data from students table
+        result = self.supabase.table("students")\
+            .select("*")\
             .eq("student_id", student_id)\
             .execute()
         
         if result.data and len(result.data) > 0:
-            return result.data[0]['content'], result.data[0]['metadata']
+            student_data = result.data[0]
+            # Format the fresh data for embedding format
+            from src.utils import format_student_data_for_embedding
+            content = format_student_data_for_embedding(student_data)
+            return content, student_data
         return None, None
 
 

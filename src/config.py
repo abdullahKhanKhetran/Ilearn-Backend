@@ -6,7 +6,7 @@ load_dotenv()
 class Config:
     # API Configuration
     API_HOST = os.getenv("API_HOST", "0.0.0.0")
-    API_PORT = int(os.getenv("API_PORT", 8000))
+    API_PORT = int(os.getenv("PORT", 8000))
     
     # HuggingFace API Configuration
     HF_API_KEY = os.getenv("HF_API_KEY")

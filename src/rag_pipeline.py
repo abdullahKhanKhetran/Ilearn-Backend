@@ -32,14 +32,9 @@ class RAGPipeline:
             }
         
         # Step 2: Get the formatted content for this student (used for LLM context)
-        # Try to get it directly from the embeddings table first
-        content, _ = self.vector_store.get_student_content_by_id(student_id)
-        
-        if not content:
-            # Fallback: format the student data for embedding format
-            from src.utils import format_student_data_for_embedding
-            content = format_student_data_for_embedding(student_data)
-        
+        # Always format fresh data - don't rely on cached embeddings
+        from src.utils import format_student_data_for_embedding
+        content = format_student_data_for_embedding(student_data)
         context = content
         
         # Step 3: Determine performance category
